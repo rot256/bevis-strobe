@@ -1,0 +1,16 @@
+[package]
+name = "bevis-strobe"
+version = "0.1.0"
+edition = "2021"
+authors = ["Mathias Hall-Andersen"]
+description = "A tiny strobe implementation based on \"Merlin\" by Henry de Valence for use with Bevis"
+keywords = ["cryptography", "zero-knowledge", "fiat-shamir", "transcript", "strobe"]
+categories = ["cryptography", "no-std"]
+license = "MIT"
+
+[dependencies]
+bevis = { path = "../bevis" }
+keccak = {version = "^0.1", default-features = false}
+zeroize = { version = "1", default-features = false, features = ["zeroize_derive"] }
+strobe-rs = "0.5"
+rand_core = "^0.6"
