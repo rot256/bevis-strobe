@@ -3,6 +3,7 @@ name = "bevis-strobe"
 version = "0.1.0"
 edition = "2021"
 authors = ["Mathias Hall-Andersen"]
+repository = "https://github.com/rot256/bevis-strobe"
 description = "A tiny strobe implementation based on \"Merlin\" by Henry de Valence for use with Bevis"
 keywords = ["cryptography", "zero-knowledge", "fiat-shamir", "transcript", "strobe"]
 categories = ["cryptography", "no-std"]
