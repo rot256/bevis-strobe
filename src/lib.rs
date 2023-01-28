@@ -2,40 +2,21 @@
 
 mod strobe;
 
-use bevis::{Hasher, Sponge, SpongeTranscript};
+use bevis::{Hasher, Sampler, Sponge, SpongeTranscript};
 
 use strobe::Strobe128;
 
 use rand_core::{impls, CryptoRng, RngCore};
 
-pub type StrobeTranscript = SpongeTranscript<Strobe>;
+pub type Transcript = SpongeTranscript<Strobe128>;
 
-#[derive(Debug)]
-pub struct Strobe {
-    strobe: Strobe128,
-}
-
-impl Strobe {
-    pub fn new(protocol_label: &'static str) -> StrobeTranscript {
-        SpongeTranscript::new(
-            Strobe {
-                strobe: Strobe128::new(protocol_label.as_bytes()),
-            }
-        )
-    }
-
-    fn read(&mut self, buf: &mut [u8]) {
-        self.strobe.bevis_squeeze(buf)
-    }
-}
-
-impl Hasher for Strobe {
+impl Hasher for Strobe128 {
     fn write(&mut self, buf: &[u8]) {
-        self.strobe.bevis_absorb(buf)
+        self.bevis_absorb(buf)
     }
 }
 
-impl RngCore for Strobe {
+impl RngCore for Strobe128 {
     fn next_u32(&mut self) -> u32 {
         impls::next_u32_via_fill(self)
     }
@@ -45,15 +26,21 @@ impl RngCore for Strobe {
     }
 
     fn try_fill_bytes(&mut self, dest: &mut [u8]) -> Result<(), rand_core::Error> {
-        self.read(dest);
+        self.bevis_squeeze(dest);
         Ok(())
     }
 
     fn fill_bytes(&mut self, dest: &mut [u8]) {
-        self.read(dest)
+        self.bevis_squeeze(dest)
     }
 }
 
-impl CryptoRng for Strobe {}
+impl CryptoRng for Strobe128 {}
 
-impl Sponge for Strobe {}
+impl Sponge for Strobe128 {
+    fn new(protocol_label: &str) -> Self {
+        Strobe128::new(protocol_label.as_bytes())
+    }
+}
+
+impl Sampler for Strobe128 {}
