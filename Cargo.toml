@@ -1,6 +1,6 @@
 [package]
 name = "bevis-strobe"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Mathias Hall-Andersen"]
 repository = "https://github.com/rot256/bevis-strobe"
