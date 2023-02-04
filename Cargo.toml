@@ -13,5 +13,7 @@ license = "MIT"
 bevis = "0.1"
 keccak = {version = "^0.1", default-features = false}
 zeroize = { version = "1", default-features = false, features = ["zeroize_derive"] }
-strobe-rs = "0.5"
 rand_core = "^0.6"
+
+[dev-dependencies]
+strobe-rs = "0.5"
